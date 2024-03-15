@@ -30,14 +30,15 @@ AuthorSchema
 
 // Virtual for author's lifespan
 AuthorSchema.virtual('lifespan').get(function() {
-  var birthYear = this.date_of_birth ? this.date_of_birth.getFullYear() : '';
-  var deathYear = this.date_of_death ? this.date_of_death.getFullYear() : '';
-
-  if (!deathYear) {
-      return birthYear + ' - ';
-  } else {
-      return birthYear + ' - ' + deathYear;
+  var lifetime_string = '';
+  if (this.date_of_birth) {
+    lifetime_string = this.date_of_birth.getYear().toString();
   }
+  lifetime_string += ' - ';
+  if (this.date_of_death) {
+    lifetime_string += this.date_of_death.getYear()
+  }
+  return lifetime_string;
 });
 
 //Export model
